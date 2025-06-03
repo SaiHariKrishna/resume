@@ -19,6 +19,9 @@
       overflow-x: hidden;
       scroll-behavior: smooth;
       position: relative;
+      line-height: 1.6;
+      opacity: 0;
+      transition: opacity 0.5s ease;
     }
 
     body::before {
@@ -42,6 +45,7 @@
       width: 100%;
       background: rgba(0, 0, 0, 0.3);
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       z-index: 1000;
       transition: all 0.3s ease;
@@ -55,16 +59,54 @@
       justify-content: space-between;
       align-items: center;
       padding: 1rem 2rem;
+      position: relative;
     }
 
     nav h1 {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-weight: 700;
       background: linear-gradient(45deg, #ff6b6b, #00d4ff, #4ecdc4);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       text-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+    }
+
+    /* Mobile Menu Toggle */
+    .mobile-menu-toggle {
+      display: none;
+      flex-direction: column;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      width: 30px;
+      height: 30px;
+      justify-content: space-around;
+      position: relative;
+      z-index: 1001;
+    }
+
+    .mobile-menu-toggle span {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background: white;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      transform-origin: center;
+    }
+
+    .mobile-menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .mobile-menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .mobile-menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(8px, -8px);
     }
 
     nav ul {
@@ -79,19 +121,23 @@
       font-weight: 500;
       transition: all 0.3s ease;
       position: relative;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
     }
 
     nav a:hover {
       color: #00d4ff;
       transform: translateY(-2px);
       text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+      background: rgba(255, 255, 255, 0.1);
     }
 
     nav a::after {
       content: '';
       position: absolute;
-      bottom: -5px;
-      left: 0;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
       width: 0;
       height: 2px;
       background: linear-gradient(45deg, #ff6b6b, #00d4ff, #4ecdc4);
@@ -100,7 +146,7 @@
     }
 
     nav a:hover::after {
-      width: 100%;
+      width: 80%;
     }
 
     /* Sections */
@@ -122,9 +168,11 @@
 
     .content {
       max-width: 1000px;
+      width: 100%;
       text-align: center;
       background: rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-radius: 20px;
       padding: 3rem;
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -157,7 +205,7 @@
     }
 
     h2 {
-      font-size: 3rem;
+      font-size: 2.5rem;
       margin-bottom: 1rem;
       background: linear-gradient(45deg, #ff6b6b, #00d4ff, #4ecdc4, #ffa726);
       background-size: 300% 300%;
@@ -166,6 +214,7 @@
       background-clip: text;
       animation: gradientShift 4s ease-in-out infinite;
       text-shadow: 0 0 40px rgba(0, 212, 255, 0.3);
+      line-height: 1.2;
     }
 
     @keyframes gradientShift {
@@ -174,16 +223,16 @@
     }
 
     p {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       line-height: 1.6;
       margin-bottom: 1rem;
       opacity: 0.9;      
     }
 
-#about .content p {
-  text-align: justify;
-  text-justify: inter-word;
-}
+    #about .content p {
+      text-align: justify;
+      text-justify: inter-word;
+    }
 
     /* Achievements */
     #achievements ul {
@@ -298,6 +347,7 @@
       padding: 2rem;
       background: rgba(0, 0, 0, 0.6);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
@@ -352,38 +402,6 @@
       line-height: 1.4;
     }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      .nav-container {
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      nav ul {
-        gap: 1rem;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-
-      h2 {
-        font-size: 2rem;
-      }
-
-      .content {
-        padding: 2rem;
-        margin: 1rem;
-      }
-
-      #home .content img {
-        width: 150px;
-        height: 150px;
-      }
-
-      .skills-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
     /* Particle effect */
     .particles {
       position: fixed;
@@ -419,6 +437,163 @@
         opacity: 0;
       }
     }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+      .mobile-menu-toggle {
+        display: flex;
+      }
+      
+      .nav-container {
+        padding: 1rem;
+      }
+      
+      nav h1 {
+        font-size: 1.2rem;
+      }
+      
+      nav ul {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background: rgba(26, 26, 46, 0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        transition: right 0.5s ease;
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+      }
+      
+      nav ul.active {
+        right: 0;
+      }
+      
+      nav a {
+        font-size: 1.1rem;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        width: 200px;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      
+      nav a:hover {
+        background: rgba(0, 212, 255, 0.1);
+        border-color: rgba(0, 212, 255, 0.3);
+        transform: scale(1.05);
+      }
+
+      h2 {
+        font-size: 1.8rem;
+      }
+
+      .content {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+        border-radius: 15px;
+      }
+
+      .section {
+        padding: 1rem;
+        min-height: auto;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+      }
+
+      #home .content img {
+        width: 150px;
+        height: 150px;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .skill-category {
+        padding: 1.25rem;
+      }
+      
+      .project {
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+      }
+      
+      .project h3 {
+        font-size: 1.3rem;
+      }
+      
+      #about .content p {
+        text-align: left;
+      }
+      
+      p {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      .content {
+        padding: 1.5rem 1rem;
+      }
+      
+      #home .content img {
+        width: 120px;
+        height: 120px;
+      }
+      
+      nav h1 {
+        font-size: 1rem;
+      }
+      
+      .skill-category {
+        padding: 1rem;
+      }
+      
+      .project {
+        padding: 1.25rem;
+      }
+      
+      p {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Improve touch targets for mobile */
+    @media (max-width: 768px) {
+      nav a,
+      .project a,
+      #contact a {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    /* Performance optimizations */
+    .particle {
+      will-change: transform, opacity;
+    }
+    
+    .section {
+      will-change: transform, opacity;
+    }
+    
+    nav a {
+      will-change: transform;
+    }
   </style>
 </head>
 <body>
@@ -429,7 +604,12 @@
   <nav id="navbar">
     <div class="nav-container">
       <h1>Sai Harikrishna</h1>
-      <ul>
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul id="navMenu">
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
@@ -444,7 +624,7 @@
   <!-- Sections -->
   <section id="home" class="section">
     <div class="content">
-      <img src="images\myphoto.jpg" alt="Profile">
+      <img src="images/myphoto.jpg" alt="Profile">
       <h2>Hi, I'm Konda Venkata Sai Harikrishna</h2>
       <p>A passionate Computer Science student and aspiring Software Development Engineer (SDE), driven by a love for solving real-world problems through innovative technology.</p>
       <p>B.Tech CSE @ Woxsen University, Hyderabad | Third-year Student</p>
@@ -625,104 +805,214 @@
   </footer>
 
   <script>
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      });
-    });
-
-    // Intersection Observer for fade-in animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          
-          // Animate achievements list items
-          if (entry.target.id === 'achievements') {
-            const items = entry.target.querySelectorAll('li');
-            items.forEach((item, index) => {
-              setTimeout(() => {
-                item.classList.add('animate');
-              }, index * 200);
-            });
-          }
-          
-          // Animate project cards
-          if (entry.target.id === 'projects' || entry.target.id === 'experience') {
-            const projects = entry.target.querySelectorAll('.project');
-            projects.forEach((project, index) => {
-              setTimeout(() => {
-                project.classList.add('animate');
-              }, index * 300);
-            });
-          }
-        }
-      });
-    }, observerOptions);
-
-    // Observe all sections
-    document.querySelectorAll('.section').forEach(section => {
-      observer.observe(section);
-    });
-
-    // Navbar background change on scroll
-    window.addEventListener('scroll', () => {
-      const navbar = document.getElementById('navbar');
-      if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(0, 0, 0, 0.8)';
-        navbar.style.boxShadow = '0 4px 32px rgba(0, 212, 255, 0.1)';
-      } else {
-        navbar.style.background = 'rgba(0, 0, 0, 0.3)';
-        navbar.style.boxShadow = '0 4px 32px rgba(0, 0, 0, 0.3)';
+    // Mobile-first Portfolio JavaScript
+    class MobilePortfolio {
+      constructor() {
+        this.initializeElements();
+        this.setupEventListeners();
+        this.createParticles();
+        this.setupIntersectionObserver();
       }
-    });
 
-    // Particle animation
-    function createParticle() {
-      const particle = document.createElement('div');
-      particle.className = 'particle';
-      
-      const size = Math.random() * 8 + 2;
-      particle.style.width = size + 'px';
-      particle.style.height = size + 'px';
-      particle.style.left = Math.random() * window.innerWidth + 'px';
-      particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
-      particle.style.animationDelay = Math.random() * 2 + 's';
-      
-      document.getElementById('particles').appendChild(particle);
-      
-      // Remove particle after animation
-      setTimeout(() => {
-        particle.remove();
-      }, 8000);
+      initializeElements() {
+        this.mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        this.navMenu = document.getElementById('navMenu');
+        this.navLinks = document.querySelectorAll('nav a');
+        this.sections = document.querySelectorAll('.section');
+        this.navbar = document.getElementById('navbar');
+        
+        // Performance optimization: Reduce particles on mobile
+        this.isMobile = window.innerWidth <= 768;
+        this.particleCount = this.isMobile ? 10 : 25;
+      }
+
+      setupEventListeners() {
+        // Mobile menu toggle
+        if (this.mobileMenuToggle) {
+          this.mobileMenuToggle.addEventListener('click', () => this.toggleMobileMenu());
+        }
+
+        // Navigation links
+        this.navLinks.forEach(link => {
+          link.addEventListener('click', (e) => this.handleNavClick(e));
+        });
+
+        // Window events with throttling for performance
+        window.addEventListener('scroll', this.throttle(() => this.handleScroll(), 16));
+        window.addEventListener('resize', this.throttle(() => this.handleResize(), 250));
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+          if (this.navMenu.classList.contains('active') && 
+              !this.navMenu.contains(e.target) && 
+              !this.mobileMenuToggle.contains(e.target)) {
+            this.closeMobileMenu();
+          }
+        });
+
+        // Prevent menu close when clicking inside menu
+        this.navMenu.addEventListener('click', (e) => {
+          e.stopPropagation();
+        });
+      }
+
+      toggleMobileMenu() {
+        this.mobileMenuToggle.classList.toggle('active');
+        this.navMenu.classList.toggle('active');
+        
+        // Prevent body scroll when menu is open
+        if (this.navMenu.classList.contains('active')) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+        }
+      }
+
+      closeMobileMenu() {
+        this.mobileMenuToggle.classList.remove('active');
+        this.navMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      handleNavClick(e) {
+        e.preventDefault();
+        const targetId = e.target.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        
+        if (targetSection) {
+          // Close mobile menu if open
+          this.closeMobileMenu();
+          
+          // Smooth scroll to section
+          const offsetTop = targetSection.offsetTop - (this.navbar.offsetHeight + 20);
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      }
+
+      handleScroll() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Update navbar background opacity based on scroll
+        if (scrollTop > 50) {
+          this.navbar.style.background = 'rgba(0, 0, 0, 0.8)';
+          this.navbar.style.boxShadow = '0 4px 32px rgba(0, 212, 255, 0.1)';
+        } else {
+          this.navbar.style.background = 'rgba(0, 0, 0, 0.3)';
+          this.navbar.style.boxShadow = '0 4px 32px rgba(0, 0, 0, 0.3)';
+        }
+      }
+
+      handleResize() {
+        const wasMobile = this.isMobile;
+        this.isMobile = window.innerWidth <= 768;
+        
+        // Close mobile menu on resize to desktop
+        if (!this.isMobile && this.navMenu.classList.contains('active')) {
+          this.closeMobileMenu();
+        }
+        
+        // Recreate particles if mobile state changed
+        if (wasMobile !== this.isMobile) {
+          this.particleCount = this.isMobile ? 10 : 25;
+          this.createParticles();
+        }
+      }
+
+      setupIntersectionObserver() {
+        const observerOptions = {
+          threshold: this.isMobile ? 0.1 : 0.3,
+          rootMargin: this.isMobile ? '0px 0px -50px 0px' : '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              this.animateElements(entry.target);
+            }
+          });
+        }, observerOptions);
+
+        this.sections.forEach(section => {
+          observer.observe(section);
+        });
+      }
+
+      animateElements(section) {
+        // Animate achievement items
+        const achievementItems = section.querySelectorAll('#achievements li');
+        achievementItems.forEach((item, index) => {
+          setTimeout(() => {
+            item.classList.add('animate');
+          }, index * 200);
+        });
+
+        // Animate project items
+        const projectItems = section.querySelectorAll('.project');
+        projectItems.forEach((item, index) => {
+          setTimeout(() => {
+            item.classList.add('animate');
+          }, index * 300);
+        });
+      }
+
+      createParticles() {
+        const particlesContainer = document.getElementById('particles');
+        if (!particlesContainer) return;
+
+        // Clear existing particles
+        particlesContainer.innerHTML = '';
+
+        for (let i = 0; i < this.particleCount; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          
+          // Random size (smaller on mobile)
+          const size = this.isMobile ? 
+            Math.random() * 2 + 1 : 
+            Math.random() * 4 + 2;
+          
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.left = `${Math.random() * 100}%`;
+          particle.style.animationDelay = `${Math.random() * 6}s`;
+          
+          const duration = this.isMobile ? 
+            Math.random() * 4 + 8 : 
+            Math.random() * 3 + 6;
+          particle.style.animationDuration = `${duration}s`;
+          
+          particlesContainer.appendChild(particle);
+        }
+      }
+
+      // Utility function for throttling
+      throttle(func, delay) {
+        let timeoutId;
+        let lastExecTime = 0;
+        return function (...args) {
+          const currentTime = Date.now();
+          
+          if (currentTime - lastExecTime > delay) {
+            func.apply(this, args);
+            lastExecTime = currentTime;
+          } else {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+              func.apply(this, args);
+              lastExecTime = Date.now();
+            }, delay - (currentTime - lastExecTime));
+          }
+        };
+      }
     }
 
-    // Create particles periodically
-    setInterval(createParticle, 800);
-
-    // Initial particle burst
-    for (let i = 0; i < 5; i++) {
-      setTimeout(createParticle, i * 200);
-    }
-
-    // Parallax effect for sections
-    window.addEventListener('scroll', () => {
-      const scrolled = window.pageYOffset;
-      document.querySelectorAll('.section').forEach((section, index) => {
-        const rate = scrolled * -0.1;
-        section.style.transform = `translateY(${rate}px)`;
-      });
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      new MobilePortfolio();
     });
 
     // Add loading animation
@@ -731,7 +1021,12 @@
       document.querySelector('#home').classList.add('visible');
     });
 
-    // Typing effect for the main heading (optional enhancement)
+    // Enhanced error handling
+    window.addEventListener('error', (e) => {
+      console.error('Application error:', e.error);
+    });
+
+    // Typing effect for the main heading
     function typeWriter(element, text, speed = 100) {
       let i = 0;
       element.innerHTML = '';
@@ -748,8 +1043,10 @@
     // Initialize typing effect after a delay
     setTimeout(() => {
       const mainHeading = document.querySelector('#home h2');
-      const originalText = mainHeading.textContent;
-      typeWriter(mainHeading, originalText, 50);
+      if (mainHeading) {
+        const originalText = mainHeading.textContent;
+        typeWriter(mainHeading, originalText, 50);
+      }
     }, 1000);
   </script>
 </body>
